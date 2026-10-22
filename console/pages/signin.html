@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-auth="signin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>amt-console: Sign in</title>
+<link rel="stylesheet" href="/static/theme.css">
+<link rel="stylesheet" href="/static/base.css">
+<script src="/static/theme-init.js"></script>
+</head>
+<body>
+<main class="product auth">
+  <div class="authcard" data-auth-state="signin">
+    <span class="mark"><svg class="i lg" aria-hidden="true"><use href="/static/icons.svg#i-dns"/></svg></span>
+    <h1>amt-console</h1>
+    <p class="body-l">Sign in with your passkey.</p>
+    <p class="muted">No password. The console keeps the amt-mcp bearer in its own vault on the NAS; your browser never holds it, and neither does this page.</p>
+    <div class="banner error" id="signin-error" data-error hidden role="alert"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-warning"/></svg><span class="txt"></span></div>
+    <button type="button" class="btn filled wide" data-signin><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-fingerprint"/></svg>Sign in with passkey</button>
+    <p class="body-s muted">Reachable on the LAN only · <span class="data">@@ORIGIN@@</span> · session idles out after @@IDLE@@ h</p>
+    <a class="btn text" href="#" data-state-set="enroll">First time here? Enroll a passkey</a>
+  </div>
+  <div class="authcard" data-auth-state="waiting">
+    <span class="mark"><svg class="i lg" aria-hidden="true"><use href="/static/icons.svg#i-fingerprint"/></svg></span>
+    <h1>Waiting for your passkey</h1>
+    <p class="muted">Use Touch ID, your phone or a security key when the browser asks. Nothing has been sent to any host.</p>
+    <div class="progress" role="progressbar" aria-label="Waiting for the authenticator"><i data-motion="progress"></i></div>
+    <button type="button" class="btn text" data-state-set="signin">Cancel</button>
+  </div>
+  <div class="authcard" data-auth-state="enroll">
+    <span class="mark"><svg class="i lg" aria-hidden="true"><use href="/static/icons.svg#i-dns"/></svg></span>
+    <h1>Enroll the first passkey</h1>
+    <p class="muted">Mint a one-time code in a terminal on the machine that holds the main vault, then enter it here. The code is valid for 10 minutes and for one enrollment.</p>
+    <p class="call"><span class="data">amt_admin.py console enroll-code</span></p>
+    <div class="field"><label for="otc">One-time code</label><div class="code" id="enroll-code"><input id="otc" inputmode="text" autocomplete="one-time-code" placeholder="XXXX" maxlength="4" aria-label="code part 1"><input inputmode="text" placeholder="XXXX" maxlength="4" aria-label="code part 2"><input inputmode="text" placeholder="XXXX" maxlength="4" aria-label="code part 3"></div>
+      <span class="help">12 characters, shown once in the terminal; it is not a secret value of any server.</span></div>
+    <div class="field"><label for="pkname">Passkey name</label><input id="pkname" placeholder="MacBook Pro · Touch ID" maxlength="64"><span class="help">Shown in Settings · Passkeys.</span></div>
+    <div class="banner error" id="enroll-error" data-error hidden role="alert"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-warning"/></svg><span class="txt"></span></div>
+    <button type="button" class="btn filled wide" id="enroll-go"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-fingerprint"/></svg>Create passkey</button>
+    <a class="btn text" href="#" data-state-set="signin">Back to sign in</a>
+  </div>
+  <div class="authcard" data-auth-state="expired">
+    <span class="mark"><svg class="i lg" aria-hidden="true"><use href="/static/icons.svg#i-timer"/></svg></span>
+    <h1>Session expired</h1>
+    <p class="body-l">You were signed out after @@IDLE@@ hours idle.</p>
+    <div class="banner live"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span class="txt">Nothing on the hosts changed. A KVM mirror or serial terminal you started is still held by amt-mcp; the console shows it again once you sign in.</span></div>
+    <button type="button" class="btn filled wide" data-signin><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-fingerprint"/></svg>Sign in with passkey</button>
+  </div>
+  <div class="authcard" data-auth-state="refused">
+    <span class="mark"><svg class="i lg" aria-hidden="true"><use href="/static/icons.svg#i-block"/></svg></span>
+    <h1>Passkey not recognized</h1>
+    <div class="banner error"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-warning"/></svg><span class="txt">This passkey is not enrolled on this console. Nothing was sent to any host.</span></div>
+    <p class="muted">Enroll it with a new one-time code, or sign in with an enrolled passkey. The console logs the refused attempt (passkey id only).</p>
+    <button type="button" class="btn filled wide" data-signin><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-fingerprint"/></svg>Try another passkey</button>
+    <a class="btn text" href="#" data-state-set="enroll">Enroll a passkey</a>
+  </div>
+</main>
+<script src="/static/webauthn.js"></script>
+<script src="/static/signin.js"></script>
+</body>
+</html>

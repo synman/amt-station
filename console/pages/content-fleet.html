@@ -1,0 +1,10 @@
+<div class="banner live" id="fleet-banner" role="status" hidden><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-cast"/></svg><span class="txt" id="fleet-banner-text"></span><a class="btn text" id="fleet-banner-open" href="/">Open</a></div>
+<div class="banner error" id="fleet-error" role="alert" hidden><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-cloud-off"/></svg><span class="txt" id="fleet-error-text"></span></div>
+<div class="fleetbar">
+  <div class="field"><label for="q" class="vh">Filter servers</label><input id="q" data-shortcut-filter placeholder="Filter by name, address, AMT version…" autocomplete="off"></div>
+  <div class="seg" role="group" aria-label="Show"><button type="button" data-show="all" aria-pressed="true">All</button><button type="button" data-show="on" aria-pressed="false">On</button><button type="button" data-show="held" aria-pressed="false">Held</button><button type="button" data-show="problems" aria-pressed="false">Problems</button></div>
+</div>
+<div class="card outlined" id="fleet-loading"><h2>Reading the fleet</h2><p class="muted m0">Asking amt-mcp for its servers. Each server's status follows, one read at a time.</p><div class="progress" role="progressbar" aria-label="Reading the fleet"><i data-motion="progress"></i></div></div>
+<div class="grid" id="fleet-grid" aria-live="polite"></div>
+<div class="card outlined" id="fleet-empty" data-empty hidden><h2>No servers yet</h2><p class="muted m0">Add the first server in Manage. amt-mcp refuses to run with none; the console shows this card only before the first add.</p></div>
+<div class="card outlined" id="fleet-nomatch" hidden><h2>No server matches</h2><p class="muted m0">The filter or the Show choice hides every server. Clear the filter or choose All.</p></div>

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pkl
+*.png
+.venv/
+.pytest_cache/
+# Real console captures the classifier tests are calibrated on: tracked, never ignored.
+!tests/real_frames/*.png
+site.vars
+build/
+*.egg-info/

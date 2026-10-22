@@ -1,0 +1,3 @@
+# amt-console runtime. Everything else is the standard library. cryptography is also what the mounted
+# node-vault-mcp secrets.py (the console's bearer read) imports; keep it equal to the root Dockerfile's pin.
+cryptography==46.0.3

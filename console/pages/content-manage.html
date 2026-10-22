@@ -1,0 +1,28 @@
+<div class="col gap16" id="servers-page">
+  <div class="card" id="srv-card" aria-labelledby="srv-h">
+    <h2 id="srv-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-dns"/></svg>Servers<span class="spacer"></span><span class="chip small tonal" id="srv-count">reading</span><button type="button" class="btn text" id="srv-reread"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Re-read</button></h2>
+    <p class="body-s muted m0" id="srv-note" role="status">Reading the servers…</p>
+    <div class="tbl-wrap"><table class="tbl wide"><thead><tr><th>Key</th><th>AMT address</th><th>Ports</th><th>Identities</th><th>TLS pin</th><th>Actions</th></tr></thead><tbody id="srv-rows"></tbody></table></div>
+    <div class="col gap8" id="srv-results" aria-live="polite"></div>
+    <p class="body-s muted m0">amt_devices list · show · pin_check (read-only; pin_check is one TLS handshake and sends no credential) · amt_device_manage add · edit · remove (confirmed: true) · the file is live at the next tool call and amt-mcp keeps the previous one as .prev-devices.json.</p>
+  </div>
+  <aside class="col addpanel" aria-label="Add a server">
+    <div class="card high" id="add-panel"><h2><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-add"/></svg>Add a server</h2>
+      <div class="form">
+        <div class="field"><label for="add-key">Key</label><input id="add-key" class="mono" placeholder="e.g. ms-03" autocomplete="off" spellcheck="false"><span class="help">lowercase letters, digits, dashes; the name every tool call uses as device</span></div>
+        <div class="field"><label for="add-ip">AMT address</label><input id="add-ip" class="mono" placeholder="10.0.0.x" autocomplete="off" spellcheck="false"><span class="help">an address, never a host name: the pin is per address</span></div>
+        <div class="field"><label for="add-wsman">WS-MAN port</label><input id="add-wsman" class="mono" value="16993" inputmode="numeric" autocomplete="off"></div>
+        <div class="field"><label for="add-kvm">KVM port</label><input id="add-kvm" class="mono" value="16995" inputmode="numeric" autocomplete="off"></div>
+        <div class="field full"><label for="add-amt">AMT identity (admin password)</label><select id="add-amt"></select><span class="help">amt_device_manage takes the NAME of a vault entry that already exists in amt-mcp's vault, never a value. A value is entered in Identities, one time, through a one-time url.</span></div>
+        <div class="field full"><label for="add-host">Host logon identity (optional)</label><select id="add-host"></select></div>
+        <div class="field full"><label for="add-pin">Expected TLS pin (optional)</label><input id="add-pin" class="mono" placeholder="64 hex characters from MEBx" autocomplete="off" spellcheck="false"><span class="help">With it, the add refuses any other leaf. Without it, the leaf the server presents during the add is pinned (trust on first use) and shown in the result; compare it with MEBx afterwards.</span></div>
+      </div>
+      <div class="pinbox"><span class="label-l"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-fingerprint"/></svg>The TLS leaf is read during the add</span>
+        <span class="body-s muted">amt_device_manage opens one TLS handshake to the WS-MAN port, sends no credential, and pins the leaf it sees (or refuses when it differs from the expected pin). There is no separate read before the add; the pin appears in the result and on the table.</span>
+      </div>
+      <div class="row"><div class="btn-wrap" id="add-wrap"><button type="button" class="btn filled" id="add-go">Add server</button></div><button type="button" class="btn text" id="add-cancel">Cancel</button></div>
+      <div class="col gap8" id="add-results" aria-live="polite"></div>
+      <p class="body-s muted m0">On add: the pin is recorded, the devices file is rewritten by amt-mcp (live at the next call), and a status read follows. Identities are named here, never entered: a value goes through a one-time intake in Identities.</p>
+    </div>
+  </aside>
+</div>

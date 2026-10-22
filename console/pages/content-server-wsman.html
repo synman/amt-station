@@ -1,0 +1,47 @@
+<div class="col gap16" id="wsman-page" data-server="@@KEY@@">
+  <div class="banner error" id="ws-paused" hidden role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-block"/></svg><span class="txt" id="ws-paused-text"></span></div>
+  <div class="banner error" id="ws-warning"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-warning"/></svg><span class="txt"><strong>No per-class safeguard beyond your confirmation.</strong> A Put may whole-replace an instance and reset fields you omit: Get the full instance, merge, then Put. Credential-named fields are refused at any depth; replies are redacted. Prefer Power, Boot and AMT settings, which validate and read back.</span></div>
+  <div class="grid two">
+    <div class="card" id="browser-card" aria-labelledby="browser-h">
+      <h2 id="browser-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-search"/></svg>WS-MAN browser<span class="spacer"></span><span class="chip small">amt_wsman_get · read-only</span></h2>
+      <div class="row filters">
+        <div class="field grow"><label for="ws-class">Class (AMT_, CIM_ or IPS_)</label><input id="ws-class" class="mono" value="AMT_BootSettingData" list="ws-classes" autocomplete="off" spellcheck="false"><datalist id="ws-classes"></datalist></div>
+        <div class="seg" role="group" aria-label="Operation" id="ws-op"><button type="button" data-op="get" aria-pressed="true">get</button><button type="button" data-op="enumerate" aria-pressed="false">enumerate</button></div>
+        <div class="btn-wrap" id="ws-read-wrap"><button type="button" class="btn tonal" id="ws-read">Read</button></div>
+      </div>
+      <div class="field" id="ws-selectors-field"><label for="ws-selectors">Selectors (get only)</label><input id="ws-selectors" class="mono" placeholder='{"InstanceID": "Intel(r) AMT: Boot Configuration 0"}' autocomplete="off" spellcheck="false"><span class="help" id="ws-selectors-help">a JSON object of text values; leave empty for a class with one instance</span></div>
+      <div class="col gap8" id="ws-state" aria-live="polite"></div>
+      <div class="banner" id="ws-cov" hidden role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span class="txt" id="ws-cov-text"></span></div>
+      <div class="row" id="ws-instances" role="group" aria-labelledby="ws-instances-label" hidden><span class="label-m muted" id="ws-instances-label">Instances · pick one to fill Selectors for a get</span></div>
+      <pre class="tree" id="ws-tree" role="region" aria-label="Instance" tabindex="0">Nothing read yet. Choose a class and press Read.</pre>
+      <div class="row">
+        <div class="btn-wrap" id="ws-copy-wrap"><button type="button" class="btn text" id="ws-copy"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-copy"/></svg>Copy as JSON</button></div>
+        <div class="btn-wrap" id="ws-edit-wrap"><button type="button" class="btn text" id="ws-edit"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-edit"/></svg>Edit and Put (Get-merge-Put)</button></div>
+      </div>
+      <p class="body-s muted m0">Edit and Put (from a get) strips the redacted fields from the Put and says so on the sheet; AMT may reset such a field, so prefer AMT settings for a class that carries one.</p>
+      <p class="body-s muted m0" id="ws-call"></p>
+    </div>
+    <div class="card" id="editor-card" aria-labelledby="editor-h">
+      <h2 id="editor-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-terminal"/></svg>Script editor<span class="spacer"></span><span class="chip small error">amt_wsman_invoke · write</span></h2>
+      <div class="row filters">
+        <div class="seg" role="group" aria-label="Operation" id="ed-op"><button type="button" data-op="put" aria-pressed="false">put</button><button type="button" data-op="create" aria-pressed="false">create</button><button type="button" data-op="delete" aria-pressed="false">delete</button><button type="button" data-op="invoke" aria-pressed="true">invoke</button></div>
+        <div class="field grow"><label for="ed-class">Class</label><input id="ed-class" class="mono" autocomplete="off" spellcheck="false"></div>
+        <div class="field grow"><label for="ed-method">Method (invoke only)</label><input id="ed-method" class="mono" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <div class="field"><label for="ed-selectors">Selectors (JSON)</label><input id="ed-selectors" class="mono" placeholder='{"InstanceID": "..."}' autocomplete="off" spellcheck="false"><span class="help">picks the instance for a put or a delete; text values only</span></div>
+      <div class="field"><label for="ed-fields">Fields / parameters (JSON)</label><textarea id="ed-fields" spellcheck="false"></textarea><span class="help">A reference parameter is {"epr": {"class": ..., "selectors": {...}}}. A credential-named field is refused before anything is sent. Replace each &lt;placeholder&gt; first.</span></div>
+      <div class="result live" id="ed-loaded" hidden role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span id="ed-loaded-text"></span></div>
+      <div class="row">
+        <div class="btn-wrap" id="ed-run-wrap"><button type="button" class="btn filled" id="ed-run">Run</button></div>
+        <div class="btn-wrap" id="ed-validate-wrap"><button type="button" class="btn text" id="ed-validate">Validate only</button></div>
+      </div>
+      <div class="col gap8" id="ed-results" aria-live="polite"></div>
+      <p class="body-s muted m0">amt_wsman_invoke {device, operation, class_name, method, selectors, fields, confirmed: true} · it does not read the instance back</p>
+    </div>
+  </div>
+  <div class="card" id="templates-card" aria-labelledby="templates-h">
+    <h2 id="templates-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-list"/></svg>Guarded templates · actions with no typed tool</h2>
+    <ul class="list tpl" id="ws-templates"></ul>
+    <p class="body-s muted m0">A template fills the editor; nothing runs until you confirm. Unprovision takes the hold: it factory-resets AMT. Field names come from the AMT SDK and have not yet been checked against a live read of each class; a template whose class does not round-trip is dropped. A name in angle brackets is a value you supply.</p>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="grid two">
+  <div class="card"><h2><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-settings"/></svg>Console preferences<span class="spacer"></span><span class="chip small">this browser</span></h2>
+    <div class="row"><span class="label-m muted">Theme</span><div class="seg" role="group" aria-label="Theme"><button type="button" data-theme-set="system" aria-pressed="true">System</button><button type="button" data-theme-set="light" aria-pressed="false">Light</button><button type="button" data-theme-set="dark" aria-pressed="false">Dark</button></div></div>
+    <div class="row"><span class="switch" role="switch" tabindex="0" aria-checked="true" data-pref-shortcuts><span class="trk"></span><span class="txt"><span>Keyboard shortcuts</span><span class="sub">g f fleet, g m manage, g c console, g p power, / filter, ? the list; never while typing</span></span></span><button type="button" class="btn text" data-shortcuts-list>Show the list</button></div>
+    <div class="row"><button type="button" class="btn outlined" data-signout><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-person"/></svg>Sign out</button></div>
+  </div>
+  <div class="card" id="passkeys"><h2><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-fingerprint"/></svg>Passkeys<span class="spacer"></span><button type="button" class="btn text" data-open="pk-add"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-add"/></svg>Add a passkey</button></h2>
+    <ul class="list" id="passkey-list"></ul>
+    <div class="result" id="passkey-result" hidden role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span></span></div>
+  </div>
+</div>
+<div id="pk-add" class="sheet" data-motion="sheet-open" data-confirm-sheet role="dialog" aria-modal="true" aria-labelledby="pk-add-t">
+  <div class="handle" aria-hidden="true"></div>
+  <h2 id="pk-add-t">Add a passkey to this console</h2>
+  <p class="consequence"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span>Starts a WebAuthn registration from this signed-in session; the browser asks for Touch ID, your phone or a security key. The new passkey is listed here by name. No one-time code is needed while you are signed in.</span></p>
+  <div class="field"><label for="pkn">Passkey name</label><input id="pkn" placeholder="Phone · Face ID" maxlength="64"></div>
+  <p class="call">console backend: passkey add (WebAuthn registration) · no amt-mcp tool: the console's own sign-in state</p>
+  <div class="acts"><button type="button" class="btn text" data-close>Cancel</button><button type="button" class="btn filled" id="pk-add-go" data-confirm data-autofocus-never>Add passkey</button></div>
+</div>

@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "amt-mcp"
+version = "0.2.0"
+description = "Intel AMT MeshCommander-parity MCP server (bearer-gated streamable HTTP, direct AMT TLS)"
+requires-python = ">=3.10"
+# Floor is 1.26: the bearer gate overrides FastMCP.call_tool/read_resource/get_prompt,
+# which relies on tools/call|resources/read|prompts/get routing through those methods.
+# Re-verify the gate's dispatch interception (tests/test_skeleton.py) on any SDK bump.
+dependencies = ["mcp>=1.26,<2", "pillow>=10"]   # Pillow: mirror JPEG encoding
+
+[project.optional-dependencies]
+# Screen-text recognition for amt_remote_logon / amt_remote_logoff (they fail closed without it):
+# `ocr` is Pillow for the tesseract path (also needs the tesseract binary); `ocr-macos` adds
+# Apple Vision via ocrmac for dev nodes.
+ocr = ["pillow>=10"]
+ocr-macos = ["pillow>=10", "ocrmac>=1.0"]
+
+[project.scripts]
+amt-mcp = "amt_server:main"
+
+[tool.setuptools]
+# Every amt_*.py module (tests/test_gate_patterns.py pins the list), and the vendored xterm.js that
+# amt_serial serves from <module dir>/vendor/xterm.
+py-modules = ["amt_captures", "amt_fleet", "amt_gate", "amt_handoff", "amt_identity", "amt_kvm", "amt_logdecode", "amt_mirror", "amt_parity", "amt_redir", "amt_registry", "amt_serial", "amt_server", "amt_tools", "amt_upload", "amt_vault", "amt_write", "amt_wsman", "amt_wsman_write"]
+packages = ["vendor.xterm"]
+
+[tool.setuptools.package-data]
+"vendor.xterm" = ["*.js", "*.css", "LICENSE.*", "README.md"]
+
+[tool.pytest.ini_options]
+# The suite is mostly headless-browser tests: run it on every core, with work stealing so the slow pieces (mockup and page verifier parts,
+# force matrices) do not pile up on one worker. Needs pytest-xdist; `-p no:xdist` or `-n 0` runs it in one process.
+addopts = "-n auto --dist worksteal"

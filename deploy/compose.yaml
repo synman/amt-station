@@ -1,0 +1,100 @@
+# amt-mcp and its management console on a Docker host. Run from the deploy directory with:
+#   docker compose --env-file ./site.vars -f src/deploy/compose.yaml --project-directory . up -d --build
+# Every site value (host names, origins, the uid) comes from site.vars in that directory: copy
+# deploy/site.vars.example there and fill it in. A value left unset stops compose before anything starts.
+# Layout under the deploy directory (all owned by the deploy user, DEPLOY_UID):
+#   site.vars             this file's site values (no secret in it)
+#   src/                  this repository
+#   node-vault-mcp/       node-vault-mcp's services/ tree (secrets.py and vault_secrets), read-only
+#   vault/                amt-mcp.vault + amt-mcp.key, a vault holding ONLY this server's entries, 0600 in a 0700 folder,
+#                         writable by the container (the console intake stores its entries here);
+#                         built and refreshed from the main vault by deploy/amt_admin.py vault sync
+#   config/devices.json   the servers this container serves, 0644, written by amt_device_manage
+#                         (in the container) and deploy/amt_admin.py device ... (over ssh), both
+#                         under flock on config/.devices.lock; re-read live when it changes
+#   amt-mcp.env           MCP_ADMIN_TOKEN_HASH=<sha256 of the fleet token>, 0600; never the token
+#                         optional, once the console is deployed: MCP_CONSOLE_TOKEN_HASH=<sha256 of the
+#                         console token> (a second bearer, logged as principal "console"); unset = fleet only
+#   data/                 HOME: state/ (settings, screenshots) and amt-recordings/ (mirror, serial)
+#   iso/                  IDE-R images
+#   console-data/         the management console's state (passkeys, sessions, captures, enroll.json), 0700, owned by DEPLOY_UID;
+#                         enroll.json is written by deploy/amt_admin.py console enroll-code and deleted by the console on use
+#   console-vault/        a vault holding ONLY the console's bearer, entry amt-console-token, as amt-console.vault +
+#                         amt-console.key, 0400, mounted read-only; the console can reach neither amt-mcp's vault, its
+#                         devices file nor its image root
+# Every port binds the host loopback only. Clients reach the MCP mount, the viewer pages and the console
+# through a TLS reverse proxy on 443 limited to the LAN; nothing here listens on the LAN, and the bearer
+# never travels over plain HTTP. The mirror and serial pages listen inside the container only when
+# started with bind=0.0.0.0.
+services:
+  amt-mcp:
+    build:
+      context: ./src
+    image: amt-mcp:local
+    container_name: amt-mcp
+    user: "${DEPLOY_UID:?set in site.vars}:${DEPLOY_GID:?set in site.vars}"
+    restart: unless-stopped
+    env_file: ./amt-mcp.env
+    environment:
+      HOME: /data
+      AMT_BIND_HOST: 0.0.0.0
+      AMT_PORT: "8765"
+      AMT_ALLOWED_HOSTS: ${AMT_ALLOWED_HOSTS:?set in site.vars}
+      AMT_PUBLIC_BASE_URL: ${AMT_PUBLIC_BASE_URL:?set in site.vars}
+      AMT_VIEWER_PUBLIC_BASE_URL: ${AMT_VIEWER_PUBLIC_BASE_URL:?set in site.vars}
+      AMT_CONSOLE_ORIGIN: ${AMT_CONSOLE_ORIGIN:?set in site.vars}     # CORS for upload and intake; frame-ancestors on viewer pages
+      AMT_DEVICES_FILE: /config/devices.json
+      AMT_DEFAULT_DEVICE: ${AMT_DEFAULT_DEVICE:?set in site.vars}   # the server a call that names none acts on
+      AMT_STATE_DIR: /data/state
+      AMT_SHOT_DIR: /data/state/shots
+      AMT_IMAGE_ROOT: /iso
+      AMT_SECRETS_CLI: /opt/node-vault-mcp/services/secrets.py
+      NVAULT_VAULT_PATH: /vault/amt-mcp.vault
+      NVAULT_MASTER_KEY_FILE: /vault/amt-mcp.key
+    volumes:
+      - ./data:/data
+      - ./iso:/iso
+      - ./vault:/vault                 # writable: amt_identity_manage intake stores console entries here
+      - ./config:/config
+      - ./node-vault-mcp:/opt/node-vault-mcp/services:ro
+    ports:
+      - "127.0.0.1:8765:8765"
+      - "127.0.0.1:8766:8766"
+
+  # The management console (console/). Its own container: no amt-mcp mounts, every action a tools/call to amt-mcp with the
+  # console bearer. Binds the host loopback only; the reverse proxy publishes it at AMT_CONSOLE_ORIGIN. The console
+  # relays the viewer pages from AMT_VIEWER_PUBLIC_BASE_URL under its own /embed/ path; amt-mcp names the console's
+  # origin (above) for upload and intake CORS. For the bearer, amt-mcp.env holds MCP_CONSOLE_TOKEN_HASH.
+  amt-console:
+    build:
+      context: ./src
+      dockerfile: console/Dockerfile
+    image: amt-console:local
+    container_name: amt-console
+    # Docker's default bridge (172.17.0.0/16): a proxy that admits only the LAN and that bridge lets the console's own
+    # calls to AMT_CONSOLE_MCP_URL through. A compose network (172.24/16) would need its own allow rule.
+    network_mode: bridge
+    user: "${DEPLOY_UID:?set in site.vars}:${DEPLOY_GID:?set in site.vars}"
+    restart: unless-stopped
+    environment:
+      HOME: /console-data
+      AMT_CONSOLE_BIND: 0.0.0.0
+      AMT_CONSOLE_PORT: "8767"
+      AMT_CONSOLE_ORIGIN: ${AMT_CONSOLE_ORIGIN:?set in site.vars}
+      AMT_CONSOLE_RP_ID: ${AMT_CONSOLE_RP_ID:?set in site.vars}
+      AMT_CONSOLE_VIEWER_ORIGIN: ${AMT_VIEWER_PUBLIC_BASE_URL:?set in site.vars}
+      # amt-mcp through the proxy; AMT_PUBLIC_BASE_URL on amt-mcp must be the same origin,
+      # because the console fetches handoff urls only from the origin it calls.
+      AMT_CONSOLE_MCP_URL: ${AMT_PUBLIC_BASE_URL:?set in site.vars}/mcp
+      AMT_CONSOLE_DATA: /console-data
+      AMT_CONSOLE_IDLE_HOURS: "12"
+      AMT_CONSOLE_CAPTURE_HOURS: "24"
+      AMT_CONSOLE_SECRETS_CLI: /opt/node-vault-mcp/services/secrets.py
+      NVAULT_VAULT_PATH: /vault/amt-console.vault
+      NVAULT_MASTER_KEY_FILE: /vault/amt-console.key
+    volumes:
+      - ./console-data:/console-data
+      - ./console-vault:/vault:ro
+      - ./node-vault-mcp:/opt/node-vault-mcp/services:ro
+    ports:
+      - "127.0.0.1:8767:8767"

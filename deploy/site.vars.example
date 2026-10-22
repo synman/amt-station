@@ -1,0 +1,21 @@
+# Site values for deploy/compose.yaml. Copy to site.vars in the deploy directory (beside src/), fill in, and
+# pass it with --env-file ./site.vars. No secret belongs here: the bearer hashes go in amt-mcp.env, credentials
+# in the vaults.
+
+# The user and group that own the deploy directory.
+DEPLOY_UID=1000
+DEPLOY_GID=1000
+
+# Host names the MCP mount answers to (comma-separated, no scheme).
+AMT_ALLOWED_HOSTS=amt.example.com
+# The origin clients reach the MCP mount at; the console calls <this>/mcp.
+AMT_PUBLIC_BASE_URL=https://amt.example.com
+# The origin of the mirror and serial viewer pages.
+AMT_VIEWER_PUBLIC_BASE_URL=https://amt-viewer.example.com
+# The console's origin (amt-mcp answers CORS on its upload and intake routes for it alone, and lets it frame
+# a viewer page) and its WebAuthn RP ID.
+AMT_CONSOLE_ORIGIN=https://amt-console.example.com
+AMT_CONSOLE_RP_ID=amt-console.example.com
+
+# The server (a key in config/devices.json) a tool call that names no device acts on.
+AMT_DEFAULT_DEVICE=my-server-1
