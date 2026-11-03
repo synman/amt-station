@@ -38,6 +38,22 @@ host's AMT over TLS, and a web console that drives the same tools. amt-station i
   so a stale password cannot lock the AMT account.
 - **Fail closed.** A missing vault, pin, OCR engine or confirmation stops the call with nothing sent.
 
+## Dependencies
+
+What the servers need to run. `tests/test_dependencies_declared.py` fails when a module imports a
+package this table does not name.
+
+| Dependency | Why |
+|---|---|
+| Python 3.11 or newer | The runtime. |
+| `mcp` (1.26 or newer, below 2) | The MCP server framework. Its HTTP stack brings `pydantic`, `starlette` and `uvicorn`, which the server also imports. |
+| `pillow` | Encodes the mirror's JPEG frames and prepares screen images for text recognition. |
+| `cryptography` | The console's passkey sign-in, and any vault CLI that needs it. |
+| `ocrmac` (optional, macOS) | Apple Vision text recognition for development nodes. The container uses the `tesseract` binary instead. |
+| `tesseract` and `ffmpeg` binaries (container) | Screen-text recognition for remote sign-in, and H.264 encoding of recordings. |
+| A vault CLI | Any script that runs as `python <cli> get <entry>` and prints the value. `AMT_SECRETS_CLI` and `AMT_CONSOLE_SECRETS_CLI` name it. |
+| An Intel AMT host | The managed machine, reached over its WS-MAN and redirection ports. |
+
 ## Architecture
 
 ```
