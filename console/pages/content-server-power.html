@@ -1,0 +1,63 @@
+<div class="col gap16" id="power-page">
+  <div class="banner" id="offered-banner" role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span class="txt" id="offered-text">Reading what AMT offers right now…</span><button type="button" class="btn text" id="offered-reread"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Re-read</button></div>
+  <div class="grid two">
+    <div class="card" id="power-card" aria-labelledby="power-h">
+      <h2 id="power-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-power"/></svg>Power<span class="spacer"></span><span id="power-pill"></span></h2>
+      <h3 class="title-s muted">Graceful · the OS is asked; nothing happens if its AMT agent does not answer, and there is no silent fallback to a harder action</h3>
+      <div class="acts" id="power-graceful"></div>
+      <h3 class="title-s muted">Other</h3>
+      <div class="acts" id="power-other"></div>
+      <details class="force-tray" open>
+        <summary class="label-l summary-row force-summary"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-warning"/></svg>Force · the OS is not asked; unsaved work is lost · each needs a hold to confirm</summary>
+        <div class="acts" id="power-force"></div>
+      </details>
+      <div class="col gap8" id="power-results" aria-live="polite"></div>
+      <p class="body-s muted m0">amt_power {device, action, confirmed: true} · one WS-MAN Digest attempt · default restart is graceful; hard_reset only when named</p>
+    </div>
+    <div class="card" id="boot-card" aria-labelledby="boot-h">
+      <h2 id="boot-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-bolt"/></svg>Next boot (one time)<span class="spacer"></span><span class="chip small dashed" id="boot-chip">AMT reports: not read</span></h2>
+      <div class="field">
+        <label for="boot-target">Target</label>
+        <select id="boot-target">
+          <option value="clear" data-label="normal boot">normal boot (clear a pending request)</option>
+          <option value="bios_setup" data-label="BIOS setup" selected>bios_setup · BIOS setup</option>
+          <option value="pxe" data-label="PXE">pxe · network</option>
+          <option value="hard_disk" data-label="hard disk">hard_disk</option>
+          <option value="cd_ider" data-label="the mounted IDE-R CD">cd_ider · the mounted IDE-R ISO</option>
+          <option value="floppy_ider" data-label="the mounted IDE-R floppy">floppy_ider</option>
+          <option value="diagnostic" data-label="diagnostic">diagnostic</option>
+        </select>
+        <span class="help">Only these seven targets; a USB or arbitrary target is refused by amt_set_next_boot. cd_ider needs an image mounted in Media first.</span>
+      </div>
+      <details>
+        <summary class="label-l summary-row"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-settings"/></svg>Advanced boot options (16) · the three marked in red act at that boot and take the hold to confirm</summary>
+        <div class="opts" id="boot-options">
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="lock_power_button"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">lock_power_button</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="lock_reset_button"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">lock_reset_button</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="lock_sleep_button"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">lock_sleep_button</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="lock_keyboard"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">lock_keyboard</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="user_password_bypass"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">user_password_bypass</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="forced_progress_events"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">forced_progress_events</span></span>
+        <span class="check danger" role="checkbox" aria-checked="false" tabindex="0" data-opt="configuration_data_reset"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">configuration_data_reset</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="bios_pause"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">bios_pause</span></span>
+        <span class="check danger" role="checkbox" aria-checked="false" tabindex="0" data-opt="reflash_bios"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">reflash_bios</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="use_safe_mode"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">use_safe_mode</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="use_sol"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">use_sol</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="use_ider"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">use_ider</span></span>
+        <span class="check danger" role="checkbox" aria-checked="false" tabindex="0" data-opt="secure_erase"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">secure_erase</span></span>
+        <span class="check" role="checkbox" aria-checked="false" tabindex="0" data-opt="enforce_secure_boot"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl data">enforce_secure_boot</span></span>
+          <div class="field" id="field-firmware_verbosity"><label for="opt-firmware_verbosity">firmware_verbosity (0-3)</label><input id="opt-firmware_verbosity" class="mono" type="number" min="0" max="3" value="0"><span class="help"></span></div>
+          <div class="field" id="field-boot_media_index"><label for="opt-boot_media_index">boot_media_index (0-255)</label><input id="opt-boot_media_index" class="mono" type="number" min="0" max="255" value="0"><span class="help"></span></div>
+        </div>
+        <p class="body-s muted">Every option starts from its safe default on each call; only what you tick here applies. The three in red make the request itself destructive: the sheet becomes a hold to confirm when any of them is ticked, whatever button opened it.</p>
+      </details>
+      <div class="acts" id="boot-actions">
+        <button type="button" class="btn tonal" id="boot-set">Set next boot only</button>
+        <button type="button" class="btn outlined" id="boot-poweron">Power on → BIOS setup</button>
+        <button type="button" class="btn danger-outlined" id="boot-reset">Reset → target</button>
+      </div>
+      <div class="col gap8" id="boot-results" aria-live="polite"></div>
+      <p class="body-s muted m0">amt_set_next_boot {device, target, options, confirmed: true} then amt_power · the combined entries (Reset to BIOS, Power up to PXE…) are these two calls in order, and the second is sent only if the first was accepted. The chip reads the BIOS-setup and IDE-R flags of AMT_BootSettingData; a PXE or disk request lives in the boot order, which that read does not show.</p>
+    </div>
+  </div>
+</div>

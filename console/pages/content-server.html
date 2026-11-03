@@ -1,0 +1,14 @@
+<div class="col gap16">
+    <div class="row"><span class="body-s muted" id="read-note">amt_status · read-only WS-MAN reads · auto 30 s</span><span class="spacer"></span><button type="button" class="btn text" id="srv-refresh"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Refresh</button></div>
+    <div id="srv-state"></div>
+    <div class="grid" id="status-cards"></div>
+  </div>
+  <aside class="col" aria-label="Sessions and capture">
+    <div class="card" aria-labelledby="sess-h" id="sessions-card"><h2 id="sess-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-cast"/></svg>Sessions on this host</h2><div id="sessions-body"></div></div>
+    <div class="card" aria-labelledby="cap-h" id="capture-card">
+      <h2 id="cap-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-camera"/></svg>Capture<span class="spacer"></span><button type="button" class="btn tonal" id="srv-shot">Take screenshot</button></h2>
+      <div id="capture-results"></div>
+      <h3 class="title-s">Past captures<span class="spacer"></span><span class="chip small">amt_captures · read-only</span></h3>
+      <div id="past-captures"></div>
+    </div>
+  </aside>

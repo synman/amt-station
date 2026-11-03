@@ -1,0 +1,25 @@
+<div class="col gap16" id="settings-page" data-server="@@KEY@@">
+  <div class="banner error" id="set-paused" hidden role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-block"/></svg><span class="txt" id="set-paused-text"></span></div>
+  <div class="row">
+    <span class="label-m muted" id="set-areas-label">Area</span>
+    <div class="areas" id="set-areas" role="group" aria-labelledby="set-areas-label">
+      <button type="button" class="chip" aria-pressed="false" data-area="network" title="read and write">network</button>
+      <button type="button" class="chip" aria-pressed="false" data-area="internet" title="read and write">internet</button>
+      <button type="button" class="chip" aria-pressed="false" data-area="security" title="read and write">security</button>
+      <button type="button" class="chip" aria-pressed="false" data-area="users" title="read and write">users</button>
+      <button type="button" class="chip selected" aria-pressed="true" data-area="kvm" title="read and write">kvm</button>
+      <button type="button" class="chip" aria-pressed="false" data-area="features" title="read and write">features</button>
+      <button type="button" class="chip dashed" aria-pressed="false" data-area="agent_presence" title="read here; write in Advanced">agent_presence · read-only here</button>
+      <button type="button" class="chip dashed" aria-pressed="false" data-area="system_defense" title="read here; write in Advanced">system_defense · read-only here</button>
+      <button type="button" class="chip dashed" aria-pressed="false" data-area="subscriptions" title="read here; write in Advanced">subscriptions · read-only here</button>
+      <button type="button" class="chip dashed" aria-pressed="false" data-area="wake_alarms" title="read here; write in Advanced">wake_alarms · read-only here</button>
+    </div>
+    <span class="spacer"></span>
+    <span class="body-s muted" id="set-note">amt_settings · not read yet</span>
+    <div class="btn-wrap" id="set-reread-wrap"><button type="button" class="btn text" id="set-reread"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Re-read</button></div>
+  </div>
+  <div class="col gap8" id="set-state" aria-live="polite"></div>
+  <div class="banner" id="set-banner" hidden role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span class="txt" id="set-banner-text"></span></div>
+  <div class="grid two" id="set-cards"></div>
+  <p class="body-s muted m0" id="set-call"></p>
+</div>

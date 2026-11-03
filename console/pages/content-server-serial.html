@@ -1,0 +1,27 @@
+<div class="col gap16" id="serial-page">
+  <div class="embed" id="sol-embed" aria-label="SOL terminal of @@KEY@@ (embedded amt-mcp page, embed mode)">
+    <div class="strip paused" id="agent-strip" data-session="agent_typing" role="status" tabindex="-1" hidden>AGENT TYPING · an agent's call holds this session for a moment · your keys are paused until it returns</div>
+    <div class="screen" id="sol-screen"></div>
+    <div class="foot" id="sol-foot"></div>
+  </div>
+  <div class="banner"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span class="txt">The host shows output only when a getty, GRUB or the kernel console is on its AMT SOL port. SOL runs beside KVM; SOL beside IDE-R is not established. Typing while you hold control is the one path that is not a tool call; the recording is the capture, listed by amt_captures.</span></div>
+  <div class="card" aria-labelledby="rec-h"><h2 id="rec-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-record"/></svg>Recordings<span class="spacer"></span><span class="chip small">amt_captures · read-only</span><button type="button" class="btn text" id="rec-refresh"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Refresh</button></h2>
+    <div id="rec-list"></div>
+  </div>
+</div>
+<aside class="col" aria-label="SOL session and sends">
+  <div class="card" aria-labelledby="ses-h"><h2 id="ses-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-terminal"/></svg>This SOL session</h2>
+    <div id="sol-session"></div>
+    <div class="col gap8" id="session-results" aria-live="polite"></div>
+  </div>
+  <div class="card" aria-labelledby="sl-h"><h2 id="sl-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-keyboard"/></svg>Send a line</h2>
+    <div class="field" id="field-line"><label for="sl">Text (sent exactly; Enter at the end is a real newline)</label><input id="sl" class="mono" autocomplete="off" spellcheck="false"><span class="help">Never a credential: use Host sign-in below. Read window 3 s, up to 4 KiB returned.</span></div>
+    <div class="row"><button type="button" class="btn filled" id="send-line">Send</button><span class="check" id="append-enter" role="checkbox" aria-checked="true" tabindex="0"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span>append Enter</span></span></div>
+    <div class="col gap8" id="line-results" aria-live="polite"></div>
+  </div>
+  <div class="card" aria-labelledby="hs-h"><h2 id="hs-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-person"/></svg>Host sign-in on SOL</h2>
+    <p class="muted m0">The same one-attempt Linux login on the SOL getty, read as text: it reads first and sends one Enter only when nothing readable came back, never at a Password: prompt.</p>
+    <div class="row"><button type="button" class="btn outlined" id="signin-btn"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-key"/></svg>Sign in (SOL)</button><button type="button" class="btn text" id="signout-btn">Sign out (SOL)</button></div>
+    <div class="col gap8" id="signin-results" aria-live="polite"></div>
+  </div>
+</aside>

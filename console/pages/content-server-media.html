@@ -1,0 +1,36 @@
+<div class="col gap16" id="media-page" data-server="@@KEY@@">
+  <div class="row" id="media-pick" @@PICK@@>
+    <div class="field grow"><label for="media-server">Server to mount on</label><select id="media-server"><option value="">reading the servers…</option></select><span class="help">The library is shared; a mount belongs to one server.</span></div>
+  </div>
+  <div class="banner error" id="noroot" hidden data-state="noroot" role="status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-warning"/></svg><span class="txt" id="noroot-text">No image root is set: every mount is refused until one is. Set it here (persisted) or with AMT_IMAGE_ROOT on the server.</span><button type="button" class="btn text" id="noroot-set">Set root</button></div>
+  <div class="grid two">
+    <div class="card" id="mounted-card" aria-labelledby="mounted-h">
+      <h2 id="mounted-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-disc"/></svg>Mounted on <span id="mounted-key" class="nowrap">…</span><span class="spacer"></span><span id="mounted-chip"></span></h2>
+      <div id="mounted-body"><p class="muted m0">Reading what is mounted…</p></div>
+      <div class="row"><button type="button" class="btn tonal" id="unmount">Unmount</button><button type="button" class="btn text" id="mounted-status"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Status</button></div>
+      <div class="col gap8" id="mounted-results" aria-live="polite"></div>
+      <p class="body-s muted m0">amt_ider {device, action: unmount, confirmed: true} · status needs none · a mount holds the host's IDE-R session until unmount; KVM keeps working beside it.</p>
+    </div>
+    <div class="card" id="mount-card" aria-labelledby="mount-h">
+      <h2 id="mount-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-add"/></svg>Mount an image</h2>
+      <div class="field"><label for="mount-iso">ISO (CD)</label><select id="mount-iso"><option value="">none</option></select></div>
+      <div class="field"><label for="mount-floppy">Floppy image (.img)</label><select id="mount-floppy"><option value="">none</option></select></div>
+      <fieldset class="col bare" role="radiogroup" aria-label="When the host sees the drive" id="mount-start"><legend class="label-m muted">When the host sees the drive</legend>
+        <span class="check" role="radio" aria-checked="true" tabindex="0" data-start="next_boot"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span>next boot · waits; the host is not reset (default)</span></span>
+        <span class="check" role="radio" aria-checked="false" tabindex="0" data-start="graceful"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span>graceful · asks the OS to reset now (the same act as Restart)</span></span>
+        <span class="check danger" role="radio" aria-checked="false" tabindex="0" data-start="now"><span class="box"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-check"/></svg></span><span class="lbl">now · HARD resets the host at once (hold to confirm)</span></span></fieldset>
+      <div class="row"><div class="btn-wrap" id="mount-wrap"><button type="button" class="btn filled" id="mount-go">Mount</button></div><span class="body-s muted">the sheet follows the start mode you chose: a plain confirm, or the hold when the host is hard reset</span></div>
+      <div class="col gap8" id="mount-results" aria-live="polite"></div>
+      <p class="body-s muted m0">Images must be .iso or .img under the root, a multiple of 512 bytes, read-only. One mount per host.</p>
+    </div>
+  </div>
+  <div class="card" id="library-card" aria-labelledby="lib-h">
+    <h2 id="lib-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-list"/></svg>Image library<span class="spacer"></span><span class="chip small tonal" id="lib-root-chip">image root · reading</span><button type="button" class="btn text" id="lib-root-change"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-edit"/></svg>Change root</button><button type="button" class="btn text" id="lib-fetch"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-download"/></svg>Fetch a URL</button><button type="button" class="btn tonal" id="lib-upload"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-add"/></svg>Upload a file</button></h2>
+    <p class="body-s muted m0" id="lib-note" role="status">Reading the library…</p>
+    <div class="tbl-wrap"><table class="tbl wide"><thead><tr><th>Name</th><th>Size</th><th>SHA-256</th><th>State</th><th>Actions</th></tr></thead><tbody id="lib-rows"></tbody></table></div>
+    <p class="muted m0" id="lib-empty" hidden></p>
+    <div class="col gap8" id="lib-failures"></div>
+    <div class="col gap8" id="lib-results" aria-live="polite"></div>
+    <p class="body-s muted m0">amt_images list and verify need no confirmation · set_root, fetch, upload, rename and delete do · an image that is mounted, downloading or uploading is never renamed, deleted or overwritten · this page touches no host.</p>
+  </div>
+</div>

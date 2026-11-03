@@ -1,0 +1,5 @@
+# design/ dependencies: the token script and the mockup verifier (not app code)
+# the verifier also needs the browser: python3 -m playwright install chromium (chromium-1208 was used)
+material-color-utilities==0.2.6
+playwright>=1.40
+jsonschema>=4

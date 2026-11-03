@@ -1,0 +1,32 @@
+<div class="col gap16" id="ident-page">
+  <div class="banner"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-shield"/></svg><span class="txt">No value is ever shown here, and none is ever a tool argument. An identity is a name, a kind, the server that owns it, where it is used and its status: <strong>present</strong> (synced from the main vault, or entered here) and <strong>updated at</strong>. A value is entered once and sent to a one-time url amt-mcp minted; amt-mcp writes it into its own vault. This console relays it once and keeps no copy.</span></div>
+  <div class="card" id="id-card" aria-labelledby="id-h">
+    <h2 id="id-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-key"/></svg>Identities<span class="spacer"></span><span class="chip small">amt_identities · read-only</span><button type="button" class="btn text" id="id-reread"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Re-read</button></h2>
+    <p class="body-s muted m0" id="id-note" role="status">Reading the identities…</p>
+    <ul class="list" id="id-list"></ul>
+    <div class="col gap8" id="id-results" aria-live="polite"></div>
+    <p class="body-s muted m0">Status is by name only: present, where it is used, updated at. amt_identities never returns a value; amt_identity_manage never takes one.</p>
+  </div>
+  <div class="card outlined"><h2><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-block"/></svg>Change the AMT admin password</h2>
+    <p class="muted m0">Not available from this console: amt-mcp has no tool that sets an AMT password, and no tool may take one as an argument. Change it in MEBx at the machine (or with another AMT client), then <strong>Replace stored value</strong> here so the vault matches; until both agree, every call to the server fails after one Digest attempt.</p>
+    <div class="btn-wrap"><button type="button" class="btn outlined" id="admin-change" aria-disabled="true">Change the AMT admin password</button><span class="reason">no tool: change it in MEBx</span></div>
+  </div>
+</div>
+<aside class="col" aria-label="New identity">
+  <div class="card high" id="new-panel"><h2><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-add"/></svg>New identity</h2>
+    <div class="form">
+      <div class="field"><label for="nid-kind">Kind</label><select id="nid-kind"><option value="amt_vault_key">AMT admin password</option><option value="host_vault_key">Host logon (user + password)</option><option value="rfb">KVM (RFB) password</option><option value="user">AMT user password</option></select></div>
+      <div class="field"><label for="nid-owner">Owner server</label><select id="nid-owner"></select></div>
+      <div class="field full" id="nid-user-f" hidden><label for="nid-user">AMT user name</label><input id="nid-user" class="mono" autocomplete="off" spellcheck="false"><span class="help">1 to 16 characters: letters, digits and _ . @ -</span></div>
+      <div class="field full"><label for="nid-name">Name</label><input id="nid-name" class="mono" autocomplete="off" spellcheck="false"><span class="help" id="nid-help">the vault entry's name</span></div>
+    </div>
+    <div class="row"><div class="btn-wrap" id="nid-wrap"><button type="button" class="btn filled" id="nid-mint">Mint the intake</button></div><button type="button" class="btn text" id="nid-cancel">Cancel</button></div>
+    <div class="col" id="intake-block" data-intake-state="minted" hidden>
+      <div class="col gap8" id="intake-status" aria-live="polite"></div>
+      <div class="field full"><label for="intake-value">Value</label><input id="intake-value" class="secret" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="entered once; never shown again"><span class="help" id="intake-help">This console sends the field once to the one-time url and the field is cleared before the answer arrives. It is not inside a form, so the browser offers to save nothing. The value is not stored, logged or returned by this console, and it is never a tool argument.</span></div>
+      <div class="row"><div class="btn-wrap" id="intake-wrap"><button type="button" class="btn filled" id="intake-send">Send the value</button></div><span class="body-s muted">relayed to the one-time url · not a tool call</span></div>
+    </div>
+    <div class="col gap8" id="nid-results" aria-live="polite"></div>
+    <p class="body-s muted m0">amt_identity_manage intake mints the url; amt-mcp writes the value into its vault in-process when the url receives it, then the url dies. Storing a value does not change a password on the AMT or on the host.</p>
+  </div>
+</aside>

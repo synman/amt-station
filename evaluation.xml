@@ -1,0 +1,42 @@
+<evaluation>
+  <qa_pair>
+    <question>The default AMT host runs Intel AMT firmware and an AMI UEFI BIOS. Find the AMT firmware version and the version of the primary BIOS element, and answer as "&lt;AMT firmware version&gt;/&lt;BIOS version&gt;", for example "1.2.3/4.5".</question>
+    <answer>19.0.5/1.04</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>The default AMT host's AMT can lock some of the host's physical controls at boot, and its firmware advertises which locks it supports (power button, reset button, sleep button, keyboard). Exactly one of those four lock capabilities is supported. Name it (as the firmware spells the capability, for example "PowerButtonLock"), then look at the pending next-boot configuration and report whether the matching lock flag (LockPowerButton, LockResetButton, LockSleepButton or LockKeyboard) is currently set. Answer as "&lt;capability&gt;:&lt;true or false&gt;".</question>
+    <answer>KeyboardLock:false</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Look at AMT's Ethernet port and general network settings for the default AMT host. What is the AMT HostName (not the operating system's FQDN), and is DHCP enabled on the port? Answer as "&lt;HostName&gt;/&lt;true or false&gt;".</question>
+    <answer>new-host/true</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>For KVM remote desktop on the default AMT host: is the plain VNC port 5900 enabled, what does AMT say user consent is required for, and what is the KVM session timeout value from the KVM redirection settings? Answer as "&lt;true or false&gt;/&lt;required-for value&gt;/&lt;timeout number&gt;", using the word the status summary uses for the consent requirement (for example "none", "kvm" or "all").</question>
+    <answer>false/none/3</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Review the TLS posture of the default AMT host's AMT. How many TLS setting instances exist, how many of them have mutual authentication switched on, and what is the organization (the O= component) in the issuer of the AMT certificate stored on the device? Answer as "&lt;instances&gt;/&lt;mutual-auth count&gt;/&lt;organization&gt;".</question>
+    <answer>2/0/Intel Corporation</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>The oldest record in the default AMT host's AMT audit log (the one at index 0) was written by a named initiator. Which initiator is it, and is that same name also one of the digest user accounts defined on the device? Answer as "&lt;initiator&gt;:&lt;yes or no&gt;".</question>
+    <answer>$$OsAdmin:yes</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>When the hardware inventory of the default AMT host is read from AMT, one of the inventory classes cannot be read on this firmware and is reported as unavailable. Which class is it, and how many storage media access devices (CIM_MediaAccessDevice) does AMT list? Answer as "&lt;unavailable class&gt;/&lt;device count&gt;".</question>
+    <answer>CIM_PhysicalMedia/2</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Report how the default AMT host's AMT is provisioned: the numeric ProvisioningMode and numeric ProvisioningState of its setup and configuration service, and the name of its control mode as the status summary words it. Answer as "&lt;mode code&gt;/&lt;state code&gt;/&lt;control mode name&gt;".</question>
+    <answer>1/2/admin_control_mode</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>On the default AMT host, what numeric EnabledState does the AMT redirection service report, and do the status summary's redirection flags say that Serial-over-LAN and IDE-R are each enabled? Answer as "&lt;EnabledState&gt;/&lt;SOL true or false&gt;/&lt;IDE-R true or false&gt;".</question>
+    <answer>32771/true/true</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>On the default AMT host, how many System Defense policies are currently defined, how many Agent Presence watchdogs are currently defined, and what is the Agent Presence capability limit MaxTotalActions? Answer as "&lt;policies&gt;/&lt;watchdogs&gt;/&lt;MaxTotalActions&gt;".</question>
+    <answer>0/0/64</answer>
+  </qa_pair>
+</evaluation>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>amt-console: @@TITLE@@</title>
+<link rel="stylesheet" href="/static/theme.css">
+<link rel="stylesheet" href="/static/base.css">
+<script src="/static/theme-init.js"></script>
+</head>
+<body>
+<div class="product"><aside class="navrail" aria-label="Sections">
+  <div class="brand"><span class="mark"><svg class="i lg" aria-hidden="true"><use href="/static/icons.svg#i-dns"/></svg></span>amt-console</div>
+  @@RAIL@@
+  <span class="spacer"></span>
+  <button type="button" class="icon-btn" id="theme-toggle" aria-label="Theme: follows the system" title="Theme: follows the system"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-moon"/></svg></button>
+  <button type="button" class="ri" data-signout title="Sign out"><span class="ind"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-person"/></svg></span>Sign out</button>
+</aside><main>
+  @@APPBAR@@
+  <section class="content@@SPLIT@@">@@CONTENT@@</section></main><nav class="bottomnav" aria-label="Sections">@@BOTTOM@@</nav></div>
+<div id="scrim" class="scrim"></div>
+<script src="/static/components.js"></script>
+<script src="/static/webauthn.js"></script>
+<script src="/static/app.js"></script>
+<script src="/static/shortcuts.js"></script>
+<script src="/static/passkeys.js"></script>
+@@PAGESCRIPTS@@
+</body>
+</html>

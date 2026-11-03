@@ -1,0 +1,29 @@
+<div class="col gap16" id="console-page">
+  <div class="embed" id="kvm-embed" aria-label="KVM display of @@KEY@@ (embedded amt-mcp viewer, embed mode)">
+    <div class="strip paused" id="agent-strip" data-session="agent_typing" role="status" tabindex="-1" hidden>AGENT TYPING · an agent's call holds this session for a moment · your keys and mouse are paused until it returns</div>
+    <div class="screen" id="kvm-screen"></div>
+    <div class="foot" id="kvm-foot"></div>
+  </div>
+  <div class="banner"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-info"/></svg><span class="txt">The view is amt-mcp's own mirror page in its embed mode, relayed through this console (the page token never appears here). Keys and mouse go to the host while you hold control: that is the one path that is not a tool call. Power, boot and media actions are the <a href="/server/@@KEY@@/power">Power &amp; boot</a> and <a href="/server/@@KEY@@/media">Media</a> sections, with one confirm standard.</span></div>
+  <div class="card" aria-labelledby="mac-h"><h2 id="mac-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-keyboard"/></svg>Key macros and text<span class="spacer"></span><span class="chip small">amt_console_input</span></h2>
+    <div class="row" id="guards" role="group" aria-label="Screen guard"><span class="label-m muted">Act only when the screen is:</span></div>
+    <div class="macros" id="macro-grid"></div>
+    <div class="row"><div class="field grow" id="field-text"><label for="txt">Text to type (printable ASCII, up to 500 characters; never a credential)</label><input id="txt" class="mono" autocomplete="off" spellcheck="false"><span class="help"></span></div><button type="button" class="btn outlined" id="type-text">Type text</button></div>
+    <p class="body-s muted m0">A vaulted credential is never typed from here: use Host sign-in, which types only into a positively identified sign-in screen. Ctrl+Alt+Del is the firmware sequence (macro ctrl_alt_del); the grid entries that are not named macros are sent as a key with modifiers.</p>
+    <div class="col gap8" id="input-results" aria-live="polite"></div>
+  </div>
+  <div class="card" aria-labelledby="rec-h"><h2 id="rec-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-record"/></svg>Recordings<span class="spacer"></span><span class="chip small">amt_captures · read-only</span><button type="button" class="btn text" id="rec-refresh"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-refresh"/></svg>Refresh</button></h2>
+    <div id="rec-list"></div>
+  </div>
+</div>
+<aside class="col" aria-label="Session, takeover and host sign-in">
+  <div class="card" aria-labelledby="ses-h"><h2 id="ses-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-cast"/></svg>This KVM session</h2>
+    <div id="kvm-session"></div>
+    <div class="col gap8" id="session-results" aria-live="polite"></div>
+  </div>
+  <div class="card" aria-labelledby="hs-h"><h2 id="hs-h"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-person"/></svg>Host sign-in</h2>
+    <p class="muted m0">Signs into the host's own console with the vaulted credential. One attempt only: the screen is classified first, the credential is typed only into a positively identified sign-in, and nothing is retried.</p>
+    <div class="row"><button type="button" class="btn filled" id="signin-btn"><svg class="i" aria-hidden="true"><use href="/static/icons.svg#i-key"/></svg>Sign in to host</button><button type="button" class="btn outlined" id="signout-btn">Sign out</button></div>
+    <div class="col gap8" id="signin-results" aria-live="polite"></div>
+  </div>
+</aside>

@@ -1,0 +1,156 @@
+{
+ "measured": "2026-10-21, read-only, my-server-1 (AMT 19.0.5), deploy/wsman_class_probe.py",
+ "note": "every AMT_/CIM_/IPS_ class amt-mcp's code named; keys = the selector names a get round-tripped with for every instance; null = no instance here to prove one",
+ "keys": {
+  "AMT_AgentPresenceCapabilities": [
+   "InstanceID"
+  ],
+  "AMT_AgentPresenceWatchdog": null,
+  "AMT_AgentPresenceWatchdogAction": null,
+  "AMT_AlarmClockService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "AMT_AuditLog": [
+   "Name"
+  ],
+  "AMT_AuthorizationService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "AMT_BootSettingData": [
+   "InstanceID"
+  ],
+  "AMT_EnvironmentDetectionSettingData": [
+   "InstanceID"
+  ],
+  "AMT_EthernetPortSettings": [
+   "InstanceID"
+  ],
+  "AMT_EventSubscriber": null,
+  "AMT_GeneralSettings": [
+   "InstanceID"
+  ],
+  "AMT_IPHeadersFilter": null,
+  "AMT_ManagementPresenceRemoteSAP": null,
+  "AMT_MessageLog": [
+   "CreationClassName",
+   "Name"
+  ],
+  "AMT_PublicKeyCertificate": [
+   "InstanceID"
+  ],
+  "AMT_RedirectionService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "AMT_RemoteAccessPolicyRule": null,
+  "AMT_SetupAndConfigurationService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "AMT_SystemDefensePolicy": null,
+  "AMT_SystemDefenseService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "AMT_TLSSettingData": [
+   "InstanceID"
+  ],
+  "CIM_AssociatedPowerManagementService": null,
+  "CIM_BIOSElement": [
+   "Name"
+  ],
+  "CIM_BootConfigSetting": [
+   "InstanceID"
+  ],
+  "CIM_BootService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "CIM_BootSourceSetting": [
+   "InstanceID"
+  ],
+  "CIM_Card": [
+   "CreationClassName",
+   "Tag"
+  ],
+  "CIM_Chassis": [
+   "CreationClassName",
+   "Tag"
+  ],
+  "CIM_ComputerSystem": [
+   "CreationClassName",
+   "Name"
+  ],
+  "CIM_FilterCollectionSubscription": null,
+  "CIM_IndicationFilter": null,
+  "CIM_KVMRedirectionSAP": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "CIM_MediaAccessDevice": [
+   "CreationClassName",
+   "DeviceID",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "CIM_MessageLog": null,
+  "CIM_PhysicalMedia": null,
+  "CIM_PhysicalMemory": [
+   "CreationClassName",
+   "Tag"
+  ],
+  "CIM_PowerManagementService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "CIM_Processor": [
+   "CreationClassName",
+   "DeviceID",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "CIM_SoftwareIdentity": [
+   "InstanceID"
+  ],
+  "IPS_AlarmClockOccurrence": null,
+  "IPS_HostBasedSetupService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "IPS_KVMRedirectionSettingData": [
+   "InstanceID"
+  ],
+  "IPS_OptInService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ],
+  "IPS_PowerManagementService": [
+   "CreationClassName",
+   "Name",
+   "SystemCreationClassName",
+   "SystemName"
+  ]
+ }
+}
